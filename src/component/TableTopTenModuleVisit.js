@@ -4,8 +4,7 @@ import { Table } from 'antd';
 import {getModuleVisitData} from './UserModuleVisit'
 
 //Get Module Visit Data, Sort and limit to top ten module visit
-const topTenModuleVisitData = getModuleVisitData.apply();
-topTenModuleVisitData.sort(function(a,b){return a.visit < b.visit ? 1 : -1;}).slice(0,10);
+const topTenModuleVisitData = getModuleVisitData.apply().sort(function(a,b){return a.visit < b.visit ? 1 : -1;}).slice(0,10);
 
 function TopTenModuleVisit() {
   const columns = [
@@ -30,6 +29,7 @@ function TopTenModuleVisit() {
         key: 'visit',
     },
 ]
+    
 
     return (
         <>
