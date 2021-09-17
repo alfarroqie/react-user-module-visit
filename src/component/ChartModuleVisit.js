@@ -2,6 +2,7 @@ import React, {useEffect } from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import * as am4plugins_sliceGrouper from "@amcharts/amcharts4/plugins/sliceGrouper"; 
 
 import {getModuleVisitData} from './UserModuleVisit'
 
@@ -20,14 +21,25 @@ function ChartModuleVisit () {
     pieSeries.dataFields.category = "name";
     pieSeries.slices.template.stroke = am4core.color("#fff");
 
-    // Disable ticks and give labels
+    // Disable ticks and labels
+    pieSeries.labels.template.disabled = true;
     pieSeries.ticks.template.disabled = true;
-    pieSeries.slices.template.tooltipText = `{category}[/] Visit : {value}`;
+
+    // // //grouping 
+    let grouper = pieSeries.plugins.push(new am4plugins_sliceGrouper.SliceGrouper());
+    grouper.threshold = 2.5;
+    grouper.groupName = "Other";
+    grouper.clickBehavior = "zoom";
+
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "right";
+    chart.legend.valign = "middle";
+    chart.legend.scrollable = true;
   });
 
   return (
     <>
-        <div id="chartModuleVisit" style={{ width: "100%", height: "300px" }}></div>
+        <div id="chartModuleVisit" style={{ width: "100%", height: "500px" }}></div>
     </>
   );
 }
